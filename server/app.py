@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from flask import Flask, make_response
 from flask_migrate import Migrate
 
@@ -19,16 +17,30 @@ def home():
 
 @app.route('/animal/<int:id>')
 def animal_by_id(id):
-    return ''
+    animal = Animal.query.get(id)
+    if animal:
+        response = make_response(f'<h2>Animal: {animal.name}</h2>')
+        return response
+    else:
+        return 'Animal not found', 404
 
 @app.route('/zookeeper/<int:id>')
 def zookeeper_by_id(id):
-    return ''
+    zookeeper = Zookeeper.query.get(id)
+    if zookeeper:
+        response = make_response(f'<h2>Zookeeper: {zookeeper.name}</h2>')
+        return response
+    else:
+        return 'Zookeeper not found', 404
 
 @app.route('/enclosure/<int:id>')
 def enclosure_by_id(id):
-    return ''
-
+    enclosure = Enclosure.query.get(id)
+    if enclosure:
+        response = make_response(f'<h2>Enclosure: {enclosure.environment}</h2>')
+        return response
+    else:
+        return 'Enclosure not found', 404
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
